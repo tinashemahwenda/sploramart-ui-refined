@@ -2,55 +2,77 @@
 {% load static %}
 {% block content %}
 
+<h1 class="font-bold text-center p-5">My Cart</h1>
+<div class="flex flex-col text-left">
+  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Product
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Description
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Price
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Role
+              </th>
+              
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            {% for p in products %}
+            {% if p %}
 
-
-<div class="container">
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h6 style="text-align:center;" class="panel-title">My Cart</h6>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0 h-10 w-10">
+                    <img class="h-10 w-10 rounded-full"
+                      src="{% static p.product_image.url %}"
+                      alt="">
+                  </div>
+                  <div class="ml-4">
+                    <div class="text-sm font-medium text-gray-900">
+                      {{p.name}}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">{{p.description}}</div>
+                
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-800 text-white">
+                  {{p.price}}
+                </span>
+              </td>
+              
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <a href="{% url 'remove-from-cart' p.id  %}" class="text-red-600 hover:text-red-900">Remove</a>
+              </td>
+            </tr>
+            {%else%}
+            <h1>no products</h1>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
-    <table class="table table-hover" id="dev-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Image</th>
-          <th>Price</th>
-          <th>Description</th>
-          <th>Remove From Cart</th>
-
-        </tr>
-      </thead>
-      {% for p in products %}
-  {% if p %}
-
-      <tr>
-        <td> {{p.name}}</td>
-        <td> <img src="{% static p.product_image.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
-        <td>{{p.price}}</td>
-        <td>{{p.description}}</td>
-
-        <td><a class="btn btn-danger btn-xs" href="{% url 'remove-from-cart' p.id  %}"><span class="glyphicon glyphicon-trash"></span></a></td>
-
-      </tr>
-      {%else%}
-      <br><br><br>
-      <h1>no products</h1>
-      {% endif %}
-      {% endfor %}
-    </table>
   </div>
 </div>
-<br><br><br>
-<div style="text-align: center;">
-  <button class="button button2">Total {{total}}</button>
-  <a href="/customer-address"><button class="button" ><span>Purchase </span></button></a>
+<div class="px-6 pt-4 pb-2">
+  <a href="/customer-address" class="bg-blue-500 hover:bg-blue-700 text-white float-right font-bold py-2 px-4 mb-5 rounded">
+      Proceed to Pay(${{total}})
+  </a>
 </div>
 
 
-<br><br><br><br><br>
-<!--
-developed By : sumit kumar
-facebook : fb.com/sumit.luv
-youtube : youtube.com/lazycoders
--->
 {% endblock content %}
